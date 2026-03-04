@@ -1,8 +1,7 @@
 import re
 
 
-price = "100 руб 10 коп"
-
+price = input()
 
 RUB_PATTERN = r"(\d+)\s?руб"
 KOP_PATTERN = r"(\d+)\s?коп"
