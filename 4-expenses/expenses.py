@@ -1,11 +1,27 @@
-expenses = [10.2, 32.2, 32.7, 45.4, 23.32, 98.2, 32.1]
+import re
 
-expenses_sum = sum(expenses)
-expenses_min = min(expenses)
-expenses_max = max(expenses)
-expenses_mean = expenses_sum / len(expenses)
-result = (expenses_min,
-          expenses_max,
-          expenses_sum,)
 
-print(result)
+price = "100 руб 10 коп"
+
+
+RUB_PATTERN = r"(\d+)\s?руб"
+KOP_PATTERN = r"(\d+)\s?коп"
+
+
+def parse_price(price: str) -> float | None:
+    matches_rub = re.findall(RUB_PATTERN, price, re.IGNORECASE)
+    if len(matches_rub) != 1:
+        return None
+    matches_kop = re.findall(KOP_PATTERN, price, re.IGNORECASE)
+    rub = float(matches_rub[0])
+
+    if len(matches_kop) >= 1:
+        rub += float(matches_kop[0]) / 100
+    return rub
+
+
+def print_price(price: float | None) -> None:
+    print(f"{price:.2f} ₽" if price is not None else "Некорректный формат суммы")
+
+
+print_price(parse_price(price))
