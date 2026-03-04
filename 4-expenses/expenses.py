@@ -4,12 +4,8 @@ expenses_sum = sum(expenses)
 expenses_min = min(expenses)
 expenses_max = max(expenses)
 expenses_mean = expenses_sum / len(expenses)
+result = (expenses_min,
+          expenses_max,
+          expenses_sum,)
 
-print(
-    (
-        expenses_sum,
-        expenses_mean,
-        expenses_min,
-        expenses_max,
-    )
-)
+print(result)
