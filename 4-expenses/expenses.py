@@ -1,26 +1,40 @@
-import re
+menu = (
+    "1. ➕ Добавить расход\n"
+    "2. 📜 Показать все расходы\n"
+    "3. 📊 Сумма и средний расход\n"
+    "4. ❌ Удалить расход по номеру\n"
+    "5. 👋 Выход\n"
+)
 
 
-price = input()
+def input_int(phrase: str, min_index: int = 0, max_index: int = 10, stop: str = "exit"):
+    while True:
+        try:
+            print(phrase)
+            user_input = input(f"({min_index}-{max_index}): ")
+            if user_input == stop:
+                print("До свидания!")
+                exit()
+            count = int(user_input)
+            if count > max_index:
+                print(f"{count} слишком большое! Максимальное число {max_index}")
+                continue
+            if count < min_index:
+                print(f"{count} слишком маленькое! Минимальной число {max_index}")
+            return count
+        except KeyboardInterrupt:
+            print("\nДо свидания!")
+            exit()
+        except Exception:
+            print(
+                f"Не корректный ввод допустимые значения {min_index}-{max_index}")
 
-RUB_PATTERN = r"(\d+)\s?руб"
-KOP_PATTERN = r"(\d+)\s?коп"
+
+def run():
+    # print_menu()
+    user_input = input_int(menu, min_index=1, max_index=5)
+    if user_input == 5:
+        exit()
 
 
-def parse_price(price: str) -> float | None:
-    matches_rub = re.findall(RUB_PATTERN, price, re.IGNORECASE)
-    if len(matches_rub) != 1:
-        return None
-    matches_kop = re.findall(KOP_PATTERN, price, re.IGNORECASE)
-    rub = float(matches_rub[0])
-
-    if len(matches_kop) >= 1:
-        rub += float(matches_kop[0]) / 100
-    return rub
-
-
-def print_price(price: float | None) -> None:
-    print(f"{price:.2f} ₽" if price is not None else "Некорректный формат суммы")
-
-
-print_price(parse_price(price))
+run()
